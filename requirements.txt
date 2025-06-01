@@ -6,4 +6,4 @@ seaborn
 scikit-learn
 scipy
 python-dotenv
-supabase-py
+supabase-py==0.2.7
