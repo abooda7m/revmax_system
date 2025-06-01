@@ -3,7 +3,7 @@ from sklearn.linear_model import LinearRegression
 import pandas as pd
 
 def render(df_filtered):
-    st.subheader("📌 Smart Business Recommendations")
+    st.subheader(" Smart Business Recommendations")
 
     low_sales_product = df_filtered[df_filtered["Region"] == "West"].groupby("Product Name")["Sales"].sum().sort_values().head(1)
     top_category = df_filtered.groupby("Category")["Sales"].sum().sort_values(ascending=False).idxmax()
@@ -22,20 +22,20 @@ def render(df_filtered):
     next_month_df = pd.DataFrame({"Month_Num": [monthly_sales["Month_Num"].max() + 1]})
     prediction = model.predict(next_month_df)[0][0]
 
-    st.markdown("### 🔎 Key Insights for Management")
+    st.markdown("###  Key Insights for Management")
     if not low_sales_product.empty:
         st.write(f"📉 Product with lowest sales in West: `{low_sales_product.index[0]}` (${low_sales_product.values[0]:,.2f})")
     else:
-        st.warning("❗ No sales data for the West region with current filters.")
-    st.write(f"📈 Top performing category: `{top_category}`")
-    st.write(f"🔄 Pareto Principle: {len(pareto_cut)} products contribute to 80% of revenue")
-    st.write(f"👑 Top customers: {', '.join(top_customers)}")
-    st.write(f"🗓️ Predicted sales next month: **${prediction:,.2f}**")
+        st.warning(" No sales data for the West region with current filters.")
+    st.write(f"Top performing category: `{top_category}`")
+    st.write(f"Pareto Principle: {len(pareto_cut)} products contribute to 80% of revenue")
+    st.write(f"Top customers: {', '.join(top_customers)}")
+    st.write(f"Predicted sales next month: **${prediction:,.2f}**")
 
-    st.success("✅ Use these insights to adjust inventory, target top customers, and improve regional strategies.")
+    st.success("Use these insights to adjust inventory, target top customers, and improve regional strategies.")
 
     # 📢 Auto-Marketing Suggestions
-    st.markdown("### 📢 Auto-Marketing Suggestions")
+    st.markdown("###  Auto-Marketing Suggestions")
     df_filtered["Month"] = df_filtered["Order Date"].dt.to_period("M")
     trend = df_filtered.groupby(["Month", "Category"])["Sales"].sum().unstack().fillna(0)
 
@@ -43,7 +43,7 @@ def render(df_filtered):
     prev_month = (df_filtered["Order Date"].max() - pd.DateOffset(months=1)).to_period("M")
 
     if last_month in trend.index and prev_month in trend.index:
-        st.info("📊 Category Growth (Last Month vs Previous):")
+        st.info(" Category Growth (Last Month vs Previous):")
         
         def safe_growth(curr, prev):
             if prev == 0 and curr == 0:
@@ -59,10 +59,10 @@ def render(df_filtered):
             change = safe_growth(curr_val, prev_val)
             
             if change is None:
-                st.info(f"❓ Cannot calculate growth for `{cat}` – No sales in previous month.")
+                st.info(f" Cannot calculate growth for `{cat}` – No sales in previous month.")
             elif change > 5:
                 st.success(f"📈 Increase in `{cat}`: {change:.2f}% – Consider boosting ads or upselling!")
             elif change < -5:
                 st.warning(f"📉 Drop in `{cat}`: {change:.2f}% – Consider discount campaigns or stock review.")
             else:
-                st.info(f"⚖️ Stable performance in `{cat}`: {change:.2f}%")
+                st.info(f" Stable performance in `{cat}`: {change:.2f}%")

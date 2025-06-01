@@ -3,10 +3,10 @@ import pandas as pd
 import streamlit.components.v1 as components
 
 def render(df_filtered):
-    st.title("📊 Business Overview & Insights")
+    st.title(" Business Overview")
 
     # KPIs
-    st.subheader("📌 Executive Summary")
+    st.subheader(" Executive Summary")
 
     total_sales = df_filtered["Sales"].sum()
     total_profit = df_filtered["Profit"].sum()
@@ -71,12 +71,12 @@ def render(df_filtered):
     components.html(html_kpis, height=400, scrolling=True)
 
     st.markdown("---")
-    st.subheader("🗺️ Sales by Region")
+    st.subheader(" Sales by Region")
     st.bar_chart(df_filtered.groupby("Region")["Sales"].sum())
 
-    st.subheader("📦 Sales by Category")
+    st.subheader(" Sales by Category")
     st.bar_chart(df_filtered.groupby("Category")["Sales"].sum())
-        # 🏆 Top Products Section
+        #  Top Products Section
     st.markdown("### Top 3 Products by Sales")
     top_products = df_filtered.groupby("Product Name")["Sales"].sum().sort_values(ascending=False).head(3)
     st.table(top_products.reset_index().rename(columns={"Sales": "Total Sales"}).style.format({"Total Sales": "${:,.2f}"}))

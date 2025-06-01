@@ -6,4 +6,5 @@ seaborn
 scikit-learn
 scipy
 python-dotenv
-supabase-py==0.2.7
+postgrest-py
+httpx

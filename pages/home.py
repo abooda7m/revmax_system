@@ -13,25 +13,21 @@ from tabs import (
 )
 from tabs.prediction import sales_prediction
 
-# إعداد صفحة Streamlit
-st.set_page_config(page_title="📊 Superstore Sales Dashboard", layout="wide")
-st.title("📊 Superstore Sales Performance Dashboard")
+st.set_page_config(page_title=" Superstore Sales Dashboard", layout="wide")
+st.title(" Superstore Sales Performance Dashboard")
 
-# تحميل البيانات
-with st.spinner("🚀 Loading data from Supabase..."):
+with st.spinner(" Loading data from Supabase..."):
     df, cleaning_log_df = load_data(supabase , "superstore_sales")
 
-# تطبيق الفلاتر
 df_filtered = apply_filters(df)
 
-# ترتيب التبويبات الجديد حسب طلبك
 tab0, tab1, tab2, tab3, tab4, tab5, = st.tabs([
-    "📊 Business Overview & Insights",   # tab0
-    "💼 Financial Analysis",             # tab1
-    "👥 Customer Analysis",              # tab2
-    "📉 Statistical Tests",              # tab3
-    "📌 Smart Business Recommendations", # tab4
-    "🔮 Sales Forecasting",              # tab5
+    " Business Overview & Insights",   # tab0
+    " Financial Analysis",             # tab1
+    " Customer Analysis",              # tab2
+    " Statistical Tests",              # tab3
+    " Smart Business Recommendations", # tab4
+    " Sales Forecasting",              # tab5
 ])
 
 # تنفيذ كل تبويب

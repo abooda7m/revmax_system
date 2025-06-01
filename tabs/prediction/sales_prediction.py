@@ -11,7 +11,7 @@ def render(df):
         return
 
     # Sidebar filters
-    st.sidebar.markdown("### 📍 Filter Forecast by")
+    st.sidebar.markdown("###  Filter Forecast by")
     region = st.sidebar.selectbox("Region", options=["All"] + sorted(df['Region'].dropna().unique().tolist()))
     category = st.sidebar.selectbox("Category", options=["All"] + sorted(df['Category'].dropna().unique().tolist()))
     future_months = st.sidebar.slider("📆 Months to Predict", min_value=1, max_value=12, value=3)
@@ -24,7 +24,7 @@ def render(df):
         df_filtered = df_filtered[df_filtered["Category"] == category]
 
     if df_filtered.shape[0] < 10:
-        st.warning("⚠️ Not enough data points after filtering. Please adjust the filters.")
+        st.warning(" Not enough data points after filtering. Please adjust the filters.")
         return
 
     # Prepare monthly sales data
@@ -44,7 +44,7 @@ def render(df):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=prophet_df['ds'], y=prophet_df['y'], name='Actual Sales', mode='lines+markers'))
     fig.add_trace(go.Scatter(x=forecast['ds'], y=forecast['yhat'], name='Forecast', mode='lines', line=dict(dash='dash')))
-    fig.update_layout(title='📈 Monthly Sales Forecast (Prophet)', xaxis_title='Date', yaxis_title='Sales')
+    fig.update_layout(title=' Monthly Sales Forecast (Prophet)', xaxis_title='Date', yaxis_title='Sales')
 
     st.plotly_chart(fig, use_container_width=True)
 
@@ -52,8 +52,8 @@ def render(df):
     forecast_df = forecast[['ds', 'yhat']].tail(future_months)
     forecast_df.rename(columns={"ds": "Date", "yhat": "Predicted Sales"}, inplace=True)
 
-    st.markdown("### 📊 Forecast Table")
+    st.markdown("###  Forecast Table")
     st.dataframe(forecast_df)
 
     csv = forecast_df.to_csv(index=False).encode()
-    st.download_button("⬇️ Download Forecast as CSV", data=csv, file_name='forecast.csv', mime='text/csv')
+    st.download_button("⬇ Download Forecast as CSV", data=csv, file_name='forecast.csv', mime='text/csv')

@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 def render(df_filtered):
-    st.title("💼 Financial Analysis")
+    st.title(" Financial Analysis")
 
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Total Sales", f"${df_filtered['Sales'].sum():,.2f}")
@@ -12,7 +12,7 @@ def render(df_filtered):
     col4.metric("Avg. Profit per Order", f"${(df_filtered['Profit'].sum() / df_filtered['Order ID'].nunique()):,.2f}")
 
     st.markdown("---")
-    st.subheader("📈 Monthly Sales and Profit Trend")
+    st.subheader(" Monthly Sales and Profit Trend")
 
     df_filtered["Order Date"] = pd.to_datetime(df_filtered["Order Date"])
     monthly = df_filtered.groupby(pd.Grouper(key="Order Date", freq="ME"))[["Sales", "Profit"]].sum().reset_index()
@@ -21,29 +21,29 @@ def render(df_filtered):
     st.line_chart(monthly.set_index("Month")[["Sales", "Profit"]])
 
     st.markdown("---")
-    st.subheader("📊 Profit by Sub Category")
+    st.subheader("Profit by Sub Category")
 
     profit_by_sub = df_filtered.groupby("Sub Category")["Profit"].sum().sort_values()
     st.bar_chart(profit_by_sub)
 
     st.markdown("---")
-    st.subheader("🧮 Profit Margin by Category")
+    st.subheader("Profit Margin by Category")
 
     category_data = df_filtered.groupby("Category")[["Sales", "Profit"]].sum()
     category_data["Profit Margin (%)"] = (category_data["Profit"] / category_data["Sales"]) * 100
     st.dataframe(category_data.style.format({"Sales": "${:,.2f}", "Profit": "${:,.2f}", "Profit Margin (%)": "{:.2f}%"}))
 
     st.markdown("---")
-    st.subheader("📂 Top 10 Sub-Categories by Sales")
+    st.subheader("Top 10 Sub-Categories by Sales")
     top_sub = df_filtered.groupby("Sub Category")["Sales"].sum().sort_values(ascending=False).head(10)
     st.bar_chart(top_sub)
 
-    st.subheader("📅 Monthly Sales Trend")
+    st.subheader("Monthly Sales Trend")
     monthly_sales = df_filtered.groupby(df_filtered["Order Date"].dt.to_period("M"))["Sales"].sum()
     monthly_sales.index = monthly_sales.index.astype(str)
     st.line_chart(monthly_sales)
 
-    st.subheader("🧭 Heatmap: Region × Category (Interactive)")
+    st.subheader("Heatmap: Region × Category (Interactive)")
     heatmap_data = df_filtered.pivot_table(index="Region", columns="Category", values="Sales", aggfunc="sum", fill_value=0).reset_index()
     melted = heatmap_data.melt(id_vars="Region", var_name="Category", value_name="Sales")
 
@@ -59,7 +59,7 @@ def render(df_filtered):
     st.plotly_chart(fig, use_container_width=True, key="region_category_heatmap")
 
     st.markdown("---")
-    st.subheader("📉 Loss-Making Products")
+    st.subheader(" Loss-Making Products")
     loss_products = df_filtered[df_filtered["Profit"] < 0]
     if not loss_products.empty:
         top_losses = loss_products.groupby("Product Name")["Profit"].sum().sort_values().head(5)
@@ -82,4 +82,4 @@ def render(df_filtered):
         st.info("These products have very low profit (less than 5 SAR):")
         st.table(top_low.reset_index().rename(columns={"Profit": "Total Profit"}).style.format({"Total Profit": "${:,.2f}"}))
     else:
-        st.success("Great! All products are above the low-profit threshold ✅")
+        st.success("Great! All products are above the low-profit threshold ")
