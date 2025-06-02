@@ -30,7 +30,6 @@ tab0, tab1, tab2, tab3, tab4, tab5, = st.tabs([
     " Sales Forecasting",              # tab5
 ])
 
-# تنفيذ كل تبويب
 with tab0:
     business_overview.render(df_filtered)
 

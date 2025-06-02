@@ -1,4 +1,3 @@
-# This is tabs/stats_tests.py
 import streamlit as st
 from scipy.stats import ttest_ind, f_oneway
 

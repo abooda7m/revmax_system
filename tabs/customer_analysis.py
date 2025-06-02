@@ -1,4 +1,3 @@
-# This is tabs/customer_analysis.py
 import streamlit as st
 import pandas as pd
 

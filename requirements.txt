@@ -6,5 +6,4 @@ seaborn
 scikit-learn
 scipy
 python-dotenv
-postgrest-py
-httpx
+supabase-py

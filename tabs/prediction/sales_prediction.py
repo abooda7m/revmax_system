@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from prophet import Prophet
 
 def render(df):
-    st.header("🔮 Sales Forecasting")
+    st.header(" Sales Forecasting")
 
     if 'Order Date' not in df.columns or 'Sales' not in df.columns:
         st.warning("Data must contain 'Order Date' and 'Sales' columns.")

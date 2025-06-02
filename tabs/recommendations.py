@@ -34,7 +34,6 @@ def render(df_filtered):
 
     st.success("Use these insights to adjust inventory, target top customers, and improve regional strategies.")
 
-    # 📢 Auto-Marketing Suggestions
     st.markdown("###  Auto-Marketing Suggestions")
     df_filtered["Month"] = df_filtered["Order Date"].dt.to_period("M")
     trend = df_filtered.groupby(["Month", "Category"])["Sales"].sum().unstack().fillna(0)
