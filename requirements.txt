@@ -6,4 +6,5 @@ seaborn
 scikit-learn
 scipy
 python-dotenv
-supabase-py
+supabase
+plotly
