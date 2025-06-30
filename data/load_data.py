@@ -1,3 +1,4 @@
+#pull the data, convert date columns, handle missing values, and derive new columns
 import pandas as pd
 import numpy as np
 from datetime import datetime
@@ -5,14 +6,18 @@ import streamlit as st
 
 @st.cache_data(ttl=900)
 def load_data(_supabase, table_name):
+    #load data from supabase 
     response = _supabase.table(table_name).select("*").execute()
     df_raw = pd.DataFrame(response.data)
+    #replace "None", "nan", None to NaN
     df_raw.replace(["None", "nan", None], np.nan, inplace=True)
+    #convert to dateTime 
     df_raw["Order Date"] = pd.to_datetime(df_raw["Order Date"], errors='coerce')
     df_raw["Ship Date"] = pd.to_datetime(df_raw["Ship Date"], errors='coerce')
     df_raw["Sales"] = pd.to_numeric(df_raw["Sales"], errors="coerce")
-
+    # clean data
     df_clean = df_raw.copy()
+    
     logs = []
     critical = ["Sales", "Order Date"]
     dropped = df_clean[df_clean[critical].isna().any(axis=1)]
